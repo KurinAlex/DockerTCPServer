@@ -1,20 +1,22 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
+using Utility;
+
 try
 {
     Console.Write("Enter your name: ");
     string? name = Console.ReadLine();
 
     using var client = new TcpClient();
-    client.Connect(IPAddress.Loopback, 8888);
+    client.Connect(IPAddress.Loopback, Data.Port);
 
     using var stream = client.GetStream();
     using var writer = new BinaryWriter(stream);
 
     SendMessage(writer, name);
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < Data.MessagesCount; i++)
     {
         string message = $"Message {i + 1}";
         SendMessage(writer, message);

@@ -1,7 +1,9 @@
-﻿using System.Net.Sockets;
-using System.Net;
+﻿using System.Net;
+using System.Net.Sockets;
 
-var server = new TcpListener(IPAddress.Any, 8888);
+using Utility;
+
+var server = new TcpListener(IPAddress.Any, Data.Port);
 
 try
 {
@@ -33,7 +35,7 @@ async Task ProcessClient()
         string name = reader.ReadString();
         Console.WriteLine($"{name} connected");
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < Data.MessagesCount; i++)
         {
             string message = reader.ReadString();
             Console.WriteLine($"{name}: {message}");
